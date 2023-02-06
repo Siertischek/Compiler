@@ -9,24 +9,14 @@
 [INFO] Copying 5 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ csci-468-spring2022 ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 47 source files to /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/target/classes
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java uses or overrides a deprecated API.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: Recompile with -Xlint:deprecation for details.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Some input files use unchecked or unsafe operations.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Recompile with -Xlint:unchecked for details.
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ csci-468-spring2022 ---
 [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 [INFO] skip non existing resourceDirectory /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/test/resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ csci-468-spring2022 ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 27 source files to /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/target/test-classes
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/test/java/edu/montana/csci/csci468/CatscriptTestBase.java: Some input files use unchecked or unsafe operations.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/test/java/edu/montana/csci/csci468/CatscriptTestBase.java: Recompile with -Xlint:unchecked for details.
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.1:test (default-test) @ csci-468-spring2022 ---
 [INFO] 
@@ -34,8 +24,8 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[ERROR] Tests run: 16, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.024 s <<< FAILURE! - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[ERROR] escapedStrings  Time elapsed: 0.013 s  <<< FAILURE!
+[ERROR] Tests run: 16, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.025 s <<< FAILURE! - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
+[ERROR] escapedStrings  Time elapsed: 0.015 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <[STRING, EOF]> but was: <[ERROR, IDENTIFIER, ERROR, ERROR, IDENTIFIER, ERROR, EOF]>
 	at edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest.escapedStrings(CatScriptTokenizerTest.java:51)
 
@@ -85,8 +75,8 @@ org.opentest4j.AssertionFailedError: expected: <[ERROR, EOF]> but was: <[ERROR, 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.986 s
-[INFO] Finished at: 2023-02-05T15:10:22-07:00
+[INFO] Total time:  1.035 s
+[INFO] Finished at: 2023-02-05T17:35:47-07:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project csci-468-spring2022: There are test failures.
 [ERROR] 
