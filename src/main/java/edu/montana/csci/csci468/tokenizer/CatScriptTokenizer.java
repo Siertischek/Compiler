@@ -43,6 +43,7 @@ public class CatScriptTokenizer {
         if(peek() == '"')
         {
             int start = postion;
+            takeChar();
             while(peek() != '"' && !tokenizationEnd())
             {
                 if(matchAndConsume('\\'))
@@ -65,15 +66,19 @@ public class CatScriptTokenizer {
             if(tokenizationEnd())
             {
                 tokenList.addToken(ERROR, "Unterminated string", start, postion, line, lineOffset);
+                return true;
             }
 
             takeChar();
 
-            String value = src.substring(start, postion);
+            String value = src.substring(start+1, postion-1);
             tokenList.addToken(STRING, value, start, postion, line, lineOffset);
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     private boolean scanIdentifier() {
