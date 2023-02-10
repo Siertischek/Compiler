@@ -218,6 +218,7 @@ public class CatScriptTokenizer {
 
     private char takeChar() {
         char c = src.charAt(postion);
+        lineOffset++;
         postion++;
         return c;
     }
