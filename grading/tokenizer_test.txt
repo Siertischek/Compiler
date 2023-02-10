@@ -24,7 +24,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[ERROR] Tests run: 16, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.023 s <<< FAILURE! - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
+[ERROR] Tests run: 16, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.021 s <<< FAILURE! - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
 [ERROR] lineOffsetsAreCorrect  Time elapsed: 0.004 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <0> but was: <-1>
 	at edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest.lineOffsetsAreCorrect(CatScriptTokenizerTest.java:115)
@@ -40,8 +40,8 @@ org.opentest4j.AssertionFailedError: expected: <0> but was: <-1>
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.024 s
-[INFO] Finished at: 2023-02-09T20:36:29-07:00
+[INFO] Total time:  1.057 s
+[INFO] Finished at: 2023-02-10T10:39:57-07:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project csci-468-spring2022: There are test failures.
 [ERROR] 
