@@ -30,7 +30,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
-[ERROR] Tests run: 29, Failures: 0, Errors: 14, Skipped: 0, Time elapsed: 0.033 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
+[ERROR] Tests run: 29, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.039 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
 [ERROR] parseIdentifierExpression  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.IdentifierExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.IdentifierExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseIdentifierExpression(CatscriptParserExpressionsTest.java:71)
@@ -39,27 +39,15 @@ java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseUnterminatedFunctionCallExpression(CatscriptParserExpressionsTest.java:110)
 
-[ERROR] parseTrueExpression  Time elapsed: 0.004 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:true
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseTrueExpression(CatscriptParserExpressionsTest.java:53)
-
 [ERROR] parseFunctionCallExpression  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseFunctionCallExpression(CatscriptParserExpressionsTest.java:96)
 
-[ERROR] parseUnterminatedListLiteralExpression  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] parseUnterminatedListLiteralExpression  Time elapsed: 0 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.ListLiteralExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseUnterminatedListLiteralExpression(CatscriptParserExpressionsTest.java:89)
 
-[ERROR] parseListLiteralExpression  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] parseListLiteralExpression  Time elapsed: 0.003 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -75,47 +63,6 @@ Error: Unexpected Token
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseNoArgFunctionCallExpression(CatscriptParserExpressionsTest.java:103)
 
-[ERROR] parseFalseExpression  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:false
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseFalseExpression(CatscriptParserExpressionsTest.java:59)
-
-[ERROR] parseNullExpression  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:null
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseNullExpression(CatscriptParserExpressionsTest.java:65)
-
-[ERROR] parseNestedUnaryExpression  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:not not true
-          ^
-
-Error: Incompatible types
-
-Line 1:not not true
-              ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseNestedUnaryExpression(CatscriptParserExpressionsTest.java:132)
-
 [ERROR] parseEmptyListLiteralExpression  Time elapsed: 0 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
@@ -128,78 +75,29 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseEmptyListLiteralExpression(CatscriptParserExpressionsTest.java:83)
 
-[ERROR] additiveExpressionsCanBeParenthesized  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:1 + (1 + 1)
-          ^
-
-Error: Unexpected Token
-
-Line 1:1 + (1 + 1)
-          ^
-
-Error: Incompatible types
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.additiveExpressionsCanBeParenthesized(CatscriptParserExpressionsTest.java:39)
-
-[ERROR] parseStringLiteralWorks  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:"asdf"
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseStringLiteralWorks(CatscriptParserExpressionsTest.java:19)
-
-[ERROR] parseNotUnaryExpression  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:not true
-      ^
-
-Error: Incompatible types
-
-Line 1:not true
-          ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseNotUnaryExpression(CatscriptParserExpressionsTest.java:125)
+[ERROR] additiveExpressionsCanBeParenthesized  Time elapsed: 0.005 s  <<< ERROR!
+java.lang.StackOverflowError
 
 [INFO] 
 [INFO] Results:
 [INFO] 
 [ERROR] Errors: 
-[ERROR]   CatscriptParserExpressionsTest.additiveExpressionsCanBeParenthesized:39->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
+[ERROR]   CatscriptParserExpressionsTest.additiveExpressionsCanBeParenthesized » StackOverflow
 [ERROR]   CatscriptParserExpressionsTest.parseEmptyListLiteralExpression:83->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserExpressionsTest.parseFalseExpression:59->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
 [ERROR]   CatscriptParserExpressionsTest.parseFunctionCallExpression:96 ClassCast class ...
 [ERROR]   CatscriptParserExpressionsTest.parseIdentifierExpression:71 ClassCast class ed...
 [ERROR]   CatscriptParserExpressionsTest.parseListLiteralExpression:77->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserExpressionsTest.parseNestedUnaryExpression:132->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
 [ERROR]   CatscriptParserExpressionsTest.parseNoArgFunctionCallExpression:103 ClassCast ...
-[ERROR]   CatscriptParserExpressionsTest.parseNotUnaryExpression:125->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserExpressionsTest.parseNullExpression:65->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserExpressionsTest.parseStringLiteralWorks:19->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserExpressionsTest.parseTrueExpression:53->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
 [ERROR]   CatscriptParserExpressionsTest.parseUnterminatedFunctionCallExpression:110 ClassCast
 [ERROR]   CatscriptParserExpressionsTest.parseUnterminatedListLiteralExpression:89 ClassCast
 [INFO] 
-[ERROR] Tests run: 29, Failures: 0, Errors: 14, Skipped: 0
+[ERROR] Tests run: 29, Failures: 0, Errors: 8, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.697 s
-[INFO] Finished at: 2023-02-26T17:42:31-07:00
+[INFO] Total time:  1.754 s
+[INFO] Finished at: 2023-02-27T07:41:23-07:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project csci-468-spring2022: There are test failures.
 [ERROR] 
