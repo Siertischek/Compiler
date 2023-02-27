@@ -9,13 +9,7 @@
 [INFO] Copying 5 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ csci-468-spring2022 ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 47 source files to /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/target/classes
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java uses or overrides a deprecated API.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: Recompile with -Xlint:deprecation for details.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Some input files use unchecked or unsafe operations.
-[WARNING] /Users/carson/Projects/msu/csci-468-spring2023/grading/scripts/repos/samuel_ertischek/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Recompile with -Xlint:unchecked for details.
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ csci-468-spring2022 ---
 [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
@@ -39,15 +33,15 @@ java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseUnterminatedFunctionCallExpression(CatscriptParserExpressionsTest.java:110)
 
-[ERROR] parseFunctionCallExpression  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] parseFunctionCallExpression  Time elapsed: 0 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseFunctionCallExpression(CatscriptParserExpressionsTest.java:96)
 
-[ERROR] parseUnterminatedListLiteralExpression  Time elapsed: 0 s  <<< ERROR!
+[ERROR] parseUnterminatedListLiteralExpression  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.ListLiteralExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseUnterminatedListLiteralExpression(CatscriptParserExpressionsTest.java:89)
 
-[ERROR] parseListLiteralExpression  Time elapsed: 0.003 s  <<< ERROR!
+[ERROR] parseListLiteralExpression  Time elapsed: 0.002 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -59,7 +53,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseListLiteralExpression(CatscriptParserExpressionsTest.java:77)
 
-[ERROR] parseNoArgFunctionCallExpression  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] parseNoArgFunctionCallExpression  Time elapsed: 0 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression cannot be cast to class edu.montana.csci.csci468.parser.expressions.FunctionCallExpression (edu.montana.csci.csci468.parser.expressions.SyntaxErrorExpression and edu.montana.csci.csci468.parser.expressions.FunctionCallExpression are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest.parseNoArgFunctionCallExpression(CatscriptParserExpressionsTest.java:103)
 
@@ -96,8 +90,8 @@ java.lang.StackOverflowError
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.754 s
-[INFO] Finished at: 2023-02-27T07:41:23-07:00
+[INFO] Total time:  1.085 s
+[INFO] Finished at: 2023-02-27T10:07:47-07:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project csci-468-spring2022: There are test failures.
 [ERROR] 
