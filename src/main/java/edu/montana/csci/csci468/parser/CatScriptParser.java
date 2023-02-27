@@ -188,10 +188,46 @@ public class CatScriptParser {
             }
         } else if(tokens.match(LEFT_BRACKET)){
             return parseListLiteral();
-        } 
+        } else if(tokens.match(IDENTIFIER)){
+            Token identifier = tokens.consumeToken();
+            if(tokens.match(LEFT_PAREN)){
+                return parseFunctionCall(identifier);
+            } else {
+                IdentifierExpression identifierExpression = new IdentifierExpression(identifier.getStringValue());
+                identifierExpression.setToken(identifier);
+                return identifierExpression;
+            }
+        }
         else {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
+        }
+        return null;
+    }
+
+    private Expression parseFunctionCall(Token identifier) {
+        List<Expression> fclist = new LinkedList<>();
+        if(tokens.matchAndConsume(LEFT_PAREN))
+        {
+            if(tokens.match(RIGHT_PAREN))
+            {
+                FunctionCallExpression functionCall = new FunctionCallExpression(identifier.getStringValue(), fclist);
+                return functionCall;
+            }
+            do {
+                fclist.add(parseExpression());
+            } while(tokens.matchAndConsume(COMMA));
+            if(tokens.match(RIGHT_PAREN))
+            {
+                FunctionCallExpression functionCall = new FunctionCallExpression(identifier.getStringValue(), fclist);
+                return functionCall;
+            }
+            else
+            {
+                FunctionCallExpression functionCall = new FunctionCallExpression(identifier.getStringValue(), fclist);
+                functionCall.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                return functionCall;
+            }
         }
         return null;
     }
@@ -215,12 +251,13 @@ public class CatScriptParser {
             }
             else
             {
-                
+                ListLiteralExpression list = new ListLiteralExpression(llist);
+                list.addError(ErrorType.UNTERMINATED_LIST);
+                return list;
             }
         } else {
             return null;       
         }
-        return null;
     }
 
     //============================================================
