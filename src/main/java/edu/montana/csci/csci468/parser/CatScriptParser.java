@@ -180,12 +180,8 @@ public class CatScriptParser {
             nullExpression.setToken(nullToken);
             return nullExpression;
         } else if(tokens.matchAndConsume(LEFT_PAREN)){
-            Expression paren = parseExpression();
-            tokens.consumeToken();
-            if(tokens.match(RIGHT_PAREN))
-            {
-                return paren;
-            }
+            ParenthesizedExpression paren = new ParenthesizedExpression(parseExpression());
+            return paren;
         } else if(tokens.match(LEFT_BRACKET)){
             return parseListLiteral();
         } else if(tokens.match(IDENTIFIER)){
@@ -202,7 +198,6 @@ public class CatScriptParser {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
         }
-        return null;
     }
 
     private Expression parseFunctionCall(Token identifier) {
