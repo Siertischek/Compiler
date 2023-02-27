@@ -156,11 +156,50 @@ public class CatScriptParser {
             IntegerLiteralExpression integerExpression = new IntegerLiteralExpression(integerToken.getStringValue());
             integerExpression.setToken(integerToken);
             return integerExpression;
-        } else {
+        } else if(tokens.match(STRING)){
+            Token stringToken = tokens.consumeToken();
+            StringLiteralExpression stringExpression = new StringLiteralExpression(stringToken.getStringValue());
+            stringExpression.setToken(stringToken);
+            return stringExpression;
+        } else if(tokens.match(TRUE)){
+            Token booleanToken = tokens.consumeToken();
+            BooleanLiteralExpression booleanExpression = new BooleanLiteralExpression(true);
+            booleanExpression.setToken(booleanToken);
+            return booleanExpression;
+        } else if(tokens.match(FALSE)){
+            Token booleanToken = tokens.consumeToken();
+            BooleanLiteralExpression booleanExpression = new BooleanLiteralExpression(false);
+            booleanExpression.setToken(booleanToken);
+            return booleanExpression;
+        } else if(tokens.match(NULL)){
+            Token nullToken = tokens.consumeToken();
+            NullLiteralExpression nullExpression = new NullLiteralExpression();
+            nullExpression.setToken(nullToken);
+            return nullExpression;
+        } else if(tokens.match(LEFT_PAREN)){
+            
+            return parseExpression();
+        } //else if(tokens.match(LEFT_BRACKET)){
+            //return parseListLiteral();
+        //} 
+        else {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
         }
     }
+
+    //private Expression parseListLiteral() {
+        //if(tokens.match(LEFT_BRACKET))
+        //{
+            //Token start = tokens.consumeToken();
+            //do {
+
+            //} while()
+            //parseExpression();
+        //} else {
+       //     return null;
+       // }
+   // }
 
     //============================================================
     //  Parse Helpers
