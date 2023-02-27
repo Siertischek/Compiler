@@ -9,6 +9,9 @@ import edu.montana.csci.csci468.tokenizer.TokenType;
 
 import static edu.montana.csci.csci468.tokenizer.TokenType.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class CatScriptParser {
 
     private TokenList tokens;
@@ -176,30 +179,49 @@ public class CatScriptParser {
             NullLiteralExpression nullExpression = new NullLiteralExpression();
             nullExpression.setToken(nullToken);
             return nullExpression;
-        } else if(tokens.match(LEFT_PAREN)){
-            
-            return parseExpression();
-        } //else if(tokens.match(LEFT_BRACKET)){
-            //return parseListLiteral();
-        //} 
+        } else if(tokens.matchAndConsume(LEFT_PAREN)){
+            Expression paren = parseExpression();
+            tokens.consumeToken();
+            if(tokens.match(RIGHT_PAREN))
+            {
+                return paren;
+            }
+        } else if(tokens.match(LEFT_BRACKET)){
+            return parseListLiteral();
+        } 
         else {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
         }
+        return null;
     }
 
-    //private Expression parseListLiteral() {
-        //if(tokens.match(LEFT_BRACKET))
-        //{
-            //Token start = tokens.consumeToken();
-            //do {
-
-            //} while()
-            //parseExpression();
-        //} else {
-       //     return null;
-       // }
-   // }
+    private Expression parseListLiteral() {
+        List<Expression> llist = new LinkedList<>();
+        if(tokens.matchAndConsume(LEFT_BRACKET))
+        {
+            if(tokens.match(RIGHT_BRACKET))
+            {
+                ListLiteralExpression list = new ListLiteralExpression(llist);
+                return list;
+            }
+            do {
+                llist.add(parseExpression());
+            } while(tokens.matchAndConsume(COMMA));
+            if(tokens.match(RIGHT_BRACKET))
+            {
+                ListLiteralExpression list = new ListLiteralExpression(llist);
+                return list;
+            }
+            else
+            {
+                
+            }
+        } else {
+            return null;       
+        }
+        return null;
+    }
 
     //============================================================
     //  Parse Helpers
