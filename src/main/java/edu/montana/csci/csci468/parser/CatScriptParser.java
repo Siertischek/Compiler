@@ -93,7 +93,9 @@ public class CatScriptParser {
             TypeLiteral returnType = null;
             if(tokens.match(COLON)) 
             {
+                tokens.consumeToken();
                 returnType = parseTypeExpression();
+                tokens.consumeToken();
             }
             def.setType(returnType);
 
@@ -117,17 +119,21 @@ public class CatScriptParser {
     private TypeLiteral parseTypeExpression() {
         TypeLiteral typeLiteral = new TypeLiteral();
 
-        if(tokens.match(INTEGER))
+        if(tokens.match("int"))
         {
             typeLiteral.setType(CatscriptType.INT);
         }
-        if(tokens.match(STRING))
+        if(tokens.match("string"))
         {
             typeLiteral.setType(CatscriptType.STRING);
         }
-        if(tokens.match(TRUE) || tokens.match(FALSE))
+        if(tokens.match("bool"))
         {
             typeLiteral.setType(CatscriptType.BOOLEAN);
+        }
+        if(tokens.match("object"))
+        {
+            typeLiteral.setType(CatscriptType.OBJECT);
         }
         return typeLiteral;
     }
@@ -208,7 +214,9 @@ public class CatScriptParser {
             TypeLiteral returnType = null;
             if(tokens.match(COLON)) 
             {
+                tokens.consumeToken();
                 returnType = parseTypeExpression();
+                tokens.consumeToken();
             }
             variableStatement.setExplicitType(returnType.getType());
             require(EQUAL, variableStatement);
