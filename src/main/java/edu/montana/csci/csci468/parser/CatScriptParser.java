@@ -80,10 +80,12 @@ public class CatScriptParser {
             {
                 do{
                     Token parameterName = require(IDENTIFIER, def);
-                    TypeLiteral typeLiteral = null;
+                    TypeLiteral typeLiteral = new TypeLiteral();
+                    typeLiteral.setType(CatscriptType.OBJECT);
                     if(tokens.matchAndConsume(COLON))
                     {
                         typeLiteral = parseTypeExpression();
+                        tokens.consumeToken();
                     }
                     def.addParameter(parameterName.getStringValue(), typeLiteral);
                 } while(tokens.matchAndConsume(COMMA) && tokens.hasMoreTokens());
@@ -123,15 +125,23 @@ public class CatScriptParser {
         {
             typeLiteral.setType(CatscriptType.INT);
         }
-        if(tokens.match("string"))
+        else if(tokens.match("string"))
         {
             typeLiteral.setType(CatscriptType.STRING);
         }
-        if(tokens.match("bool"))
+        else if(tokens.match("bool"))
         {
             typeLiteral.setType(CatscriptType.BOOLEAN);
         }
-        if(tokens.match("object"))
+        else if(tokens.match("object"))
+        {
+            typeLiteral.setType(CatscriptType.OBJECT);
+        }
+        else if(tokens.match("<"))
+        {
+            tokens.consumeToken();
+        }
+        else
         {
             typeLiteral.setType(CatscriptType.OBJECT);
         }
@@ -211,7 +221,8 @@ public class CatScriptParser {
             Token id = require(IDENTIFIER, variableStatement);
             variableStatement.setVariableName(id.getStringValue());
 
-            TypeLiteral returnType = null;
+            TypeLiteral returnType = new TypeLiteral();
+            returnType.setType(CatscriptType.OBJECT);
             if(tokens.match(COLON)) 
             {
                 tokens.consumeToken();
