@@ -30,7 +30,14 @@ public class BooleanLiteralExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return super.evaluate(runtime);
+        if(booleanValue == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override

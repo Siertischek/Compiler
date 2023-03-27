@@ -61,7 +61,17 @@ public class FactorExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return super.evaluate(runtime);
+        Integer lhs = (Integer) leftHandSide.evaluate(runtime);
+        Integer rhs = (Integer) rightHandSide.evaluate(runtime);
+
+        if(isMultiply())
+        {
+            return lhs * rhs;
+        }
+        else
+        {
+            return lhs / rhs;
+        }
     }
 
     @Override

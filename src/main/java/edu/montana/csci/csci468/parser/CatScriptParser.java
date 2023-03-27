@@ -57,11 +57,254 @@ public class CatScriptParser {
     //============================================================
 
     private Statement parseProgramStatement() {
-        Statement printStmt = parsePrintStatement();
-        if (printStmt != null) {
-            return printStmt;
+        Statement functionDefStatement = parseFunctionDefinitionStatement();
+        if(functionDefStatement != null)
+        {
+            return functionDefStatement;
         }
+        return parseStatement();
+    }
+
+    private Statement parseFunctionDefinitionStatement() {
+        if(tokens.match(FUNCTION))
+        {
+            Token start = tokens.consumeToken();
+            FunctionDefinitionStatement def = new FunctionDefinitionStatement();
+            def.setStart(start);
+            
+            Token functionName = require(IDENTIFIER, def);
+            def.setName(functionName.getStringValue());
+
+            require(LEFT_PAREN, def);
+            if(!tokens.match(RIGHT_PAREN))
+            {
+                do{
+                    Token parameterName = require(IDENTIFIER, def);
+                    TypeLiteral typeLiteral = null;
+                    if(tokens.matchAndConsume(COLON))
+                    {
+                        typeLiteral = parseTypeExpression();
+                    }
+                    def.addParameter(parameterName.getStringValue(), typeLiteral);
+                } while(tokens.matchAndConsume(COMMA) && tokens.hasMoreTokens());
+            }
+            require(RIGHT_PAREN, def);
+
+            TypeLiteral returnType = null;
+            if(tokens.match(COLON)) 
+            {
+                returnType = parseTypeExpression();
+            }
+            def.setType(returnType);
+
+            require(LEFT_BRACE, def);
+            LinkedList<Statement> statements = new LinkedList<>();
+            this.currentFunctionDefinition = def;
+            while(!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens())
+            {
+                statements.add(parseStatement());
+            }
+            this.currentFunctionDefinition = null;
+            require(RIGHT_BRACE, def);
+            def.setBody(statements);
+            return def;
+        }
+        else{
+            return null;
+        }
+    }
+
+    private TypeLiteral parseTypeExpression() {
+        TypeLiteral typeLiteral = new TypeLiteral();
+
+        if(tokens.match(INTEGER))
+        {
+            typeLiteral.setType(new CatscriptType("int", Integer.class));
+        }
+        if(tokens.match(STRING))
+        {
+            typeLiteral.setType(new CatscriptType("string", String.class));
+        }
+        if(tokens.match(TRUE) || tokens.match(FALSE))
+        {
+            typeLiteral.setType(new CatscriptType("bool", Boolean.class));
+        }
+        return typeLiteral;
+    }
+
+    private Statement parseStatement() {
+        Statement stmt = parsePrintStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        stmt = parseForStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        stmt = parseReturnStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        stmt = parseIfStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        stmt = parseVarStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        stmt = parseAssignmentOrFunctionCallStatement();
+        if(stmt != null) {
+            return stmt;
+        }
+        if(currentFunctionDefinition != null)
+        {
+            stmt = parseReturnStatement();
+            if(stmt != null)
+            {
+                return stmt;
+            }
+        }
+
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseAssignmentOrFunctionCallStatement() {
+        if(tokens.match(IDENTIFIER))
+        {
+            Token start = tokens.consumeToken();
+            if(tokens.match(EQUAL))
+            {
+                tokens.consumeToken();
+                final AssignmentStatement assignmentStmt = new AssignmentStatement();
+                assignmentStmt.setStart(start);
+                assignmentStmt.setVariableName(start.getStringValue());
+                assignmentStmt.setExpression(parseExpression());
+                assignmentStmt.setEnd(tokens.lastToken());
+                return assignmentStmt;
+            }
+            else if(tokens.matchAndConsume(LEFT_PAREN))
+            {
+                return parseFunctionCallStatement(start);
+            }
+        }
+        return null;
+    }
+
+    private Statement parseFunctionCallStatement(Token id) {
+        FunctionCallStatement fcs = new FunctionCallStatement(parseFunctionCall(id));
+        return fcs;
+    }
+
+    private Statement parseVarStatement() {
+        if(tokens.match(VAR))
+        {
+            VariableStatement variableStatement = new VariableStatement();
+            variableStatement.setStart(tokens.consumeToken());
+
+            Token id = require(IDENTIFIER, variableStatement);
+            variableStatement.setVariableName(id.getStringValue());
+
+            require(COLON, variableStatement);
+            TypeLiteral type = parseTypeExpression();
+            variableStatement.setExplicitType(type.getType());
+            require(EQUAL, variableStatement);
+            variableStatement.setExpression(parseExpression());
+            return variableStatement;
+        }
+        return null;
+    }
+
+    private Statement parseIfStatement() {
+        if(tokens.match(IF))
+        {
+            IfStatement ifStatement = new IfStatement();
+            ifStatement.setStart(tokens.consumeToken());
+
+            require(LEFT_PAREN, ifStatement);
+            ifStatement.setExpression(parseExpression());
+            require(RIGHT_PAREN, ifStatement);
+            require(LEFT_BRACE, ifStatement);
+            LinkedList<Statement> ifstatements = new LinkedList<>();
+            while(!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens())
+            {
+                ifstatements.add(parseStatement());
+            }
+            require(RIGHT_BRACE, ifStatement);
+            ifStatement.setTrueStatements(ifstatements);
+
+            if(tokens.match(ELSE))
+            {
+                tokens.consumeToken();
+                Statement ifelse = parseIfStatement();
+                if(ifelse == null)
+                {
+                    require(LEFT_BRACE, ifStatement);
+                    LinkedList<Statement> elsestatements = new LinkedList<>();
+                    while(!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens())
+                    {
+                        elsestatements.add(parseStatement());
+                    }
+                    ifStatement.setEnd(require(RIGHT_BRACE, ifStatement));
+                    ifStatement.setTrueStatements(elsestatements);
+                }
+                else if(ifelse != null)
+                {
+                    //ifStatement.setElseStatements(ifelse);
+                }
+            }
+            return ifStatement;
+        }
+        return null;
+    }
+
+    private Statement parseForStatement() {
+        if(tokens.match(FOR))
+        {
+            ForStatement forStatement = new ForStatement();
+            forStatement.setStart(tokens.consumeToken());
+
+            require(LEFT_PAREN, forStatement);
+            Token id = require(IDENTIFIER, forStatement);
+            forStatement.setVariableName(id.getStringValue());
+            require(IN, forStatement);
+            forStatement.setExpression(parseExpression());
+            require(RIGHT_PAREN, forStatement);
+
+            require(LEFT_BRACE, forStatement);
+            LinkedList<Statement> statements = new LinkedList<>();
+            while(!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens())
+            {
+                statements.add(parseStatement());
+            }
+
+            forStatement.setBody(statements);
+            forStatement.setEnd(require(RIGHT_BRACE, forStatement));
+
+            return forStatement;
+        }
+        return null;
+    }
+
+    private Statement parseReturnStatement() {
+        if(tokens.match(RETURN))
+        {
+            ReturnStatement returnStatement = new ReturnStatement();
+            returnStatement.setStart(tokens.consumeToken());
+            returnStatement.setFunctionDefinition(currentFunctionDefinition);
+
+            Expression returnExpression = parseExpression();
+
+            if(returnExpression != null)
+            {
+                returnStatement.setExpression(returnExpression);
+            }
+
+            return returnStatement;
+
+        } else{
+            return null;
+        }
     }
 
     private Statement parsePrintStatement() {
@@ -200,7 +443,7 @@ public class CatScriptParser {
         }
     }
 
-    private Expression parseFunctionCall(Token identifier) {
+    private FunctionCallExpression parseFunctionCall(Token identifier) {
         List<Expression> fclist = new LinkedList<>();
         if(tokens.matchAndConsume(LEFT_PAREN))
         {
