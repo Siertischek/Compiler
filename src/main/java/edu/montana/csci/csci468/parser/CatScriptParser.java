@@ -205,9 +205,12 @@ public class CatScriptParser {
             Token id = require(IDENTIFIER, variableStatement);
             variableStatement.setVariableName(id.getStringValue());
 
-            require(COLON, variableStatement);
-            TypeLiteral type = parseTypeExpression();
-            variableStatement.setExplicitType(type.getType());
+            TypeLiteral returnType = null;
+            if(tokens.match(COLON)) 
+            {
+                returnType = parseTypeExpression();
+            }
+            variableStatement.setExplicitType(returnType.getType());
             require(EQUAL, variableStatement);
             variableStatement.setExpression(parseExpression());
             return variableStatement;
@@ -277,9 +280,10 @@ public class CatScriptParser {
             {
                 statements.add(parseStatement());
             }
+            Token end = require(RIGHT_BRACE, forStatement);
 
             forStatement.setBody(statements);
-            forStatement.setEnd(require(RIGHT_BRACE, forStatement));
+            forStatement.setEnd(end);
 
             return forStatement;
         }
@@ -294,15 +298,18 @@ public class CatScriptParser {
             returnStatement.setFunctionDefinition(currentFunctionDefinition);
 
             require(LEFT_BRACE, returnStatement);
-            if(!tokens.match(RIGHT_BRACE))
+            if(tokens.match(RIGHT_BRACE))
             {
-                returnStatement.setExpression(parseExpression());
-                returnStatement.setEnd(require(RIGHT_BRACE, returnStatement));
+                
+                Token end = require(RIGHT_BRACE, returnStatement);
+                returnStatement.setEnd(end);
 
                 return returnStatement;
             }
             else{
-                returnStatement.setEnd(require(RIGHT_BRACE, returnStatement));
+                returnStatement.setExpression(parseExpression());
+                Token end = require(RIGHT_BRACE, returnStatement);
+                returnStatement.setEnd(end);
                 return returnStatement;
             }
 
@@ -454,6 +461,7 @@ public class CatScriptParser {
             if(tokens.match(RIGHT_PAREN))
             {
                 FunctionCallExpression functionCall = new FunctionCallExpression(identifier.getStringValue(), fclist);
+                tokens.consumeToken();
                 return functionCall;
             }
             do {
@@ -462,6 +470,7 @@ public class CatScriptParser {
             if(tokens.match(RIGHT_PAREN))
             {
                 FunctionCallExpression functionCall = new FunctionCallExpression(identifier.getStringValue(), fclist);
+                tokens.consumeToken();
                 return functionCall;
             }
             else
@@ -481,6 +490,7 @@ public class CatScriptParser {
             if(tokens.match(RIGHT_BRACKET))
             {
                 ListLiteralExpression list = new ListLiteralExpression(llist);
+                tokens.consumeToken();
                 return list;
             }
             do {
@@ -489,6 +499,7 @@ public class CatScriptParser {
             if(tokens.match(RIGHT_BRACKET))
             {
                 ListLiteralExpression list = new ListLiteralExpression(llist);
+                tokens.consumeToken();
                 return list;
             }
             else
