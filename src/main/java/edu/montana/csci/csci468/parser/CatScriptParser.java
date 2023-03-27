@@ -119,15 +119,15 @@ public class CatScriptParser {
 
         if(tokens.match(INTEGER))
         {
-            typeLiteral.setType(new CatscriptType("int", Integer.class));
+            typeLiteral.setType(CatscriptType.INT);
         }
         if(tokens.match(STRING))
         {
-            typeLiteral.setType(new CatscriptType("string", String.class));
+            typeLiteral.setType(CatscriptType.STRING);
         }
         if(tokens.match(TRUE) || tokens.match(FALSE))
         {
-            typeLiteral.setType(new CatscriptType("bool", Boolean.class));
+            typeLiteral.setType(CatscriptType.BOOLEAN);
         }
         return typeLiteral;
     }
@@ -293,14 +293,18 @@ public class CatScriptParser {
             returnStatement.setStart(tokens.consumeToken());
             returnStatement.setFunctionDefinition(currentFunctionDefinition);
 
-            Expression returnExpression = parseExpression();
-
-            if(returnExpression != null)
+            require(LEFT_BRACE, returnStatement);
+            if(!tokens.match(RIGHT_BRACE))
             {
-                returnStatement.setExpression(returnExpression);
-            }
+                returnStatement.setExpression(parseExpression());
+                returnStatement.setEnd(require(RIGHT_BRACE, returnStatement));
 
-            return returnStatement;
+                return returnStatement;
+            }
+            else{
+                returnStatement.setEnd(require(RIGHT_BRACE, returnStatement));
+                return returnStatement;
+            }
 
         } else{
             return null;
