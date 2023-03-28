@@ -72,22 +72,26 @@ public class IfStatement extends Statement {
     public void execute(CatscriptRuntime runtime) {
         Object conditionalresult = expression.evaluate(runtime);
 
-        runtime.pushScope();
+        
         if(Boolean.TRUE.equals(conditionalresult))
         {
+            runtime.pushScope();
             for(Statement trueStatement : trueStatements)
             {
                 trueStatement.execute(runtime);
             }
+            runtime.popScope();
         }
         else
         {
+            runtime.pushScope();
             for(Statement elseStatement : elseStatements)
             {
                 elseStatement.execute(runtime);
             }
+            runtime.popScope();
         }
-        runtime.popScope();
+        
     }
 
     @Override

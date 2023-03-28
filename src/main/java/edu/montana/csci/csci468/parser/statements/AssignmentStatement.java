@@ -35,7 +35,7 @@ public class AssignmentStatement extends Statement {
         if (symbolType == null) {
             addError(ErrorType.UNKNOWN_NAME);
         } else {
-            if(!symbolType.isAssignableFrom(expression.getType()))
+            if(symbolType.isAssignableFrom(expression.getType()) == false)
             {
                 addError(ErrorType.INCOMPATIBLE_TYPES);
             }

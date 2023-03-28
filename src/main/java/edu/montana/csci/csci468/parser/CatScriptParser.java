@@ -139,6 +139,7 @@ public class CatScriptParser {
         }
         else if(tokens.match("<"))
         {
+            typeLiteral.setType(CatscriptType.getListType(parseTypeExpression().getType()));
             tokens.consumeToken();
         }
         else
@@ -201,14 +202,15 @@ public class CatScriptParser {
             }
             else if(tokens.matchAndConsume(LEFT_PAREN))
             {
-                return parseFunctionCallStatement(start);
+                return parseFunctionCallStatement(tokens.consumeToken());
             }
         }
         return null;
     }
 
     private Statement parseFunctionCallStatement(Token id) {
-        FunctionCallStatement fcs = new FunctionCallStatement(parseFunctionCall(id));
+        FunctionCallExpression fce = parseFunctionCall(id);
+        FunctionCallStatement fcs = new FunctionCallStatement(fce);
         return fcs;
     }
 

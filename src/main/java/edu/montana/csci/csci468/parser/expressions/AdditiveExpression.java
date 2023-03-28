@@ -71,10 +71,25 @@ public class AdditiveExpression extends Expression {
         Object rhsValue = rightHandSide.evaluate(runtime);
         if(this.getType() == CatscriptType.STRING)
         {
-            String lhs = lhsValue.toString();
-            String rhs = rhsValue.toString();
+            String lhs = "";
+            String rhs = "";
+            if(lhsValue == null)
+            {
+                lhs = "null";
+                rhs = rhsValue.toString();
+            }
+            else if(rhsValue == null)
+            {
+                rhs = "null";
+                lhs = lhsValue.toString();
+            }
+            else
+            {
+                lhs = lhsValue.toString();
+                rhs = rhsValue.toString();
+            }
 
-            return lhs + rhs;
+            return lhs.concat(rhs);
         }
         else
         {
