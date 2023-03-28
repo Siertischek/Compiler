@@ -316,19 +316,17 @@ public class CatScriptParser {
             returnStatement.setStart(tokens.consumeToken());
             returnStatement.setFunctionDefinition(currentFunctionDefinition);
 
-            require(LEFT_BRACE, returnStatement);
-            if(tokens.match(RIGHT_BRACE))
+            if(!tokens.match(RIGHT_BRACE))
             {
-                
-                Token end = require(RIGHT_BRACE, returnStatement);
-                returnStatement.setEnd(end);
-
-                return returnStatement;
-            }
-            else{
                 returnStatement.setExpression(parseExpression());
                 Token end = require(RIGHT_BRACE, returnStatement);
                 returnStatement.setEnd(end);
+                return returnStatement;
+            }
+            else{
+                Token end = require(RIGHT_BRACE, returnStatement);
+                returnStatement.setEnd(end);
+
                 return returnStatement;
             }
 
