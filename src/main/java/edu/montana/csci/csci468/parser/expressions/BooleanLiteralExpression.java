@@ -47,7 +47,14 @@ public class BooleanLiteralExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        if(booleanValue == true)
+        {
+            code.pushConstantOntoStack(true);
+        }
+        else
+        {
+            code.pushConstantOntoStack(false);
+        }
     }
 
 }

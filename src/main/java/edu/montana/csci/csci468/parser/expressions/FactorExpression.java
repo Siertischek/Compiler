@@ -1,5 +1,7 @@
 package edu.montana.csci.csci468.parser.expressions;
 
+import org.objectweb.asm.Opcodes;
+
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -81,7 +83,13 @@ public class FactorExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        getLeftHandSide().compile(code);
+        getRightHandSide().compile(code);
+        if (isMultiply()) {
+            code.addInstruction(Opcodes.IMUL);
+        } else {
+            code.addInstruction(Opcodes.IDIV);
+        }
     }
 
 

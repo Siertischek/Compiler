@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.objectweb.asm.Opcodes;
+
 public class FunctionCallExpression extends Expression {
     private final String name;
     List<Expression> arguments;
@@ -84,7 +86,19 @@ public class FunctionCallExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.addVarInstruction(Opcodes.ALOAD, 0);
+        FunctionDefinitionStatement function = getProgram().getFunction(name);
+        for(int i = 0; i < arguments.size(); i++)
+        {
+            Expression argument = arguments.get(i);
+            argument.compile(code);
+            if(function.getParameterType(i).equals(CatscriptType.OBJECT))
+            {
+                box(code, argument.getType());
+            }
+        }
+
+        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, code.getProgramInternalName(), name, function.getDescriptor());
     }
 
 

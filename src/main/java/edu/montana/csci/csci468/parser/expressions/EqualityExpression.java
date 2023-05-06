@@ -1,5 +1,8 @@
 package edu.montana.csci.csci468.parser.expressions;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
+
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -87,7 +90,27 @@ public class EqualityExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        getLeftHandSide().compile(code);
+        box(code, getLeftHandSide().getType());
+        getRightHandSide().compile(code);
+        box(code, getRightHandSide().getType());
+
+        Label setTrue = new Label();
+        Label end = new Label();
+
+        if(isEqual())
+        {
+            code.addJumpInstruction(Opcodes.IF_ACMPEQ, setTrue);
+        }
+        else
+        {
+            code.addJumpInstruction(Opcodes.IF_ACMPNE, setTrue);
+        }
+        code.pushConstantOntoStack(false);
+        code.addJumpInstruction(Opcodes.GOTO, end);
+        code.addLabel(setTrue);
+        code.pushConstantOntoStack(true);
+        code.addLabel(end);
     }
 
 

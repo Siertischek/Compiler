@@ -8,6 +8,8 @@ import edu.montana.csci.csci468.parser.SymbolTable;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.objectweb.asm.Opcodes;
+
 public class ListLiteralExpression extends Expression {
     List<Expression> values;
     private CatscriptType type;
@@ -63,7 +65,16 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.addTypeInstruction(Opcodes.NEW, "java/util/LinkedList");
+        code.addInstruction(Opcodes.DUP);
+        code.addMethodInstruction(Opcodes.INVOKESPECIAL, "java/util/LinkedList", "<init>", "()V");
+        for (Expression value : values) {
+            code.addInstruction(Opcodes.DUP);
+            value.compile(code);
+            box(code, value.getType());
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, "java/util/LinkedList", "add", "(Ljava/lang/Object;)Z");
+            code.addInstruction(Opcodes.POP);
+        }
     }
 
 
