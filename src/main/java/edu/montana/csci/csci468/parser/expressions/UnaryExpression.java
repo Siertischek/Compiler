@@ -88,12 +88,7 @@ public class UnaryExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        getRightHandSide().compile(code);
-        if (isMinus()) {
-            code.pushConstantOntoStack(-1 * );
-        } else {
-            code.addInstruction(Opcodes.IDIV);
-        }
+        super.compile(code);
     }
 
 
